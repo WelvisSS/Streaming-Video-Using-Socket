@@ -2,6 +2,7 @@ from socket import *
 import cv2 as cv
 import numpy as np
 import time as tm
+import sys
 
 class ServerSocket:
     def __init__(self, name='localhost', port=7777) -> None:
@@ -13,7 +14,6 @@ class ServerSocket:
         self.socket.listen(1)
         print('Servidor pronto para receber.')
         
-
     def run_socket(self) -> None:
         connection_socket, address = self.socket.accept()
         sentence = connection_socket.recv(1024)
@@ -24,8 +24,10 @@ class ServerSocket:
         if sentence.decode() == 'get_video':
             self.load_video(connection_socket)
 
-        connection_socket.close()
+        if sentence.decode() == 'get_whole_video':
+            self.load_whole_video(connection_socket)
 
+        connection_socket.close()
 
     def load_image(self, socket=None, image_name='source/imagem.png') -> None:
         if socket == None:
@@ -35,7 +37,7 @@ class ServerSocket:
         image = cv.imread(image_name)
         encoded_image = cv.imencode('.'+extension, image)[1]
         image_array = np.array(encoded_image)
-        string = image_array.tostring()
+        string = image_array.tobytes()
 
         socket.send(string)
 
@@ -52,15 +54,22 @@ class ServerSocket:
                 socket.send(b'end')
                 break
 
-            encoded_frame = cv.imencode('.jpg', frame)[1]
+            encoded_frame = cv.imencode('.png', frame)[1]
             image_array = np.array(encoded_frame)
-            string = image_array.tostring()
+            string = image_array.tobytes()
 
             socket.send(string)
             tm.sleep(0.016)
         
         video.release()
 
+    def load_whole_video(self, socket=None, video_name='source/video.mp4') -> None:
+        if socket == None:
+            socket = self.socket
+
+        with open(video_name, 'rb') as video:
+            read_video = video.read()
+            socket.send(read_video)
 
 
 if __name__ == '__main__':
