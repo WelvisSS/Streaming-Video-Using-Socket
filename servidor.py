@@ -2,19 +2,34 @@ from socket import *
 import cv2 as cv
 import numpy as np
 import time as tm
+import pickle as pc
+import struct as st
 import sys
 
 class ServerSocket:
+    '''
+    Server Socket class. Sends imagens or videos to a client.
+    '''
+
+
     def __init__(self, name='localhost', port=7777) -> None:
         self.setup_socket(name, port)
 
     def setup_socket(self, name, port):
+        '''
+        Sets up the socket.
+        '''
+
         self.socket = socket(AF_INET, SOCK_STREAM)
         self.socket.bind((name, port))
         self.socket.listen(1)
         print('Servidor pronto para receber.')
         
     def run_socket(self) -> None:
+        '''
+        Runs socket connection.
+        '''
+
         connection_socket, address = self.socket.accept()
         sentence = connection_socket.recv(1024)
 
@@ -30,46 +45,56 @@ class ServerSocket:
         connection_socket.close()
 
     def load_image(self, socket=None, image_name='source/imagem.png') -> None:
+        '''
+        Sends an image to the client using a socket.
+        '''
+
         if socket == None:
             socket = self.socket
 
-        name, extension = image_name.split('.')
+        # carrega a imagem
         image = cv.imread(image_name)
-        encoded_image = cv.imencode('.'+extension, image)[1]
-        image_array = np.array(encoded_image)
-        string = image_array.tobytes()
 
-        socket.send(string)
+        # serializa os dados e calcula o tamanho
+        data = pc.dumps(image)
+        message_size = st.pack('L', len(data))
+
+        # envia o tamanho da mensagem e os dados
+        socket.sendall(message_size + data)
 
     def load_video(self, socket=None, video_name='source/video.mp4') -> None:
+        '''
+        Streams a video to the client using a socket.
+        '''
+
         if socket == None:
             socket = self.socket
 
+        # carrega o video
         video = cv.VideoCapture(video_name)
 
-        while video.isOpened():
+        while True:
+            # le um quadro do video
             ret, frame = video.read()
 
+            # caso ret seja falso, o video finalizou
             if not ret:
-                socket.send(b'end')
+                data = pc.dumps(b'end')
+                message_size = st.pack('L', len(data))
+                socket.sendall(message_size + data)
                 break
+            
+            # serializa os dados e calcula o tamanho
+            data = pc.dumps(frame)
+            message_size = st.pack('L', len(data))
 
-            encoded_frame = cv.imencode('.png', frame)[1]
-            image_array = np.array(encoded_frame)
-            string = image_array.tobytes()
+            # envia o tamanho da mensagem e os dados
+            socket.sendall(message_size + data)
 
-            socket.send(string)
+            # pausa para sincronizar os frames
             tm.sleep(0.016)
-        
+
         video.release()
-
-    def load_whole_video(self, socket=None, video_name='source/video.mp4') -> None:
-        if socket == None:
-            socket = self.socket
-
-        with open(video_name, 'rb') as video:
-            read_video = video.read()
-            socket.send(read_video)
 
 
 if __name__ == '__main__':
