@@ -1,9 +1,7 @@
 import pickle as pc
 from socket import *
 import cv2 as cv
-import numpy as np
 import os
-import time as tm
 import struct as st
 
 class ClientSocket:
@@ -22,7 +20,7 @@ class ClientSocket:
         self.socket = socket(AF_INET, SOCK_STREAM)
         self.socket.connect((name, port))
     
-    def get_image(self):
+    def get_image(self) -> None:
         '''
         Gets an image from a server.
         '''
@@ -32,20 +30,21 @@ class ClientSocket:
 
         # estabelece o tamanho do lote
         data = b''
-        payload_size = st.calcsize("L")
+        payload_size = st.calcsize('i')
         
         # recebe dados enquanto não atingir o tamanho do lote
         while len(data) < payload_size:
-            data += self.socket.recv(1024*1024)
+            data += self.socket.recv(1024*100)
 
         # separa o tamanho do frame dos dados recebidos
         packed_message_size = data[:payload_size]
         data = data[payload_size:]
-        message_size = st.unpack("L", packed_message_size)[0]
+        message_size = st.unpack('i', packed_message_size)[0]
 
         # recebe mais dados enquanto não atingir o tamanho da mensagem
         while len(data) < message_size:
-            data += self.socket.recv(1024*1024)
+            data += self.socket.recv(1024*100)
+
 
         # separa os dados do frame
         image_data = data[:message_size]
@@ -62,7 +61,7 @@ class ClientSocket:
         self.socket.close()
         print('Finalizado.')
 
-    def get_video(self):
+    def get_video(self) -> None:
         '''
         Gets a video from a server.
         '''
@@ -75,21 +74,21 @@ class ClientSocket:
 
         # estabelece o tamanho do lote
         data = b''
-        payload_size = st.calcsize("L")
+        payload_size = st.calcsize('i')
         
         while True:
             # recebe dados enquanto não atingir o tamanho do lote
             while len(data) < payload_size:
-                data += self.socket.recv(1024*1024)
+                data += self.socket.recv(1024*100)
 
             # separa o tamanho do frame dos dados recebidos
             packed_message_size = data[:payload_size]
             data = data[payload_size:]
-            message_size = st.unpack("L", packed_message_size)[0]
+            message_size = st.unpack('i', packed_message_size)[0]
 
             # recebe mais dados enquanto não atingir o tamanho da mensagem
             while len(data) < message_size:
-                data += self.socket.recv(1024*1024)
+                data += self.socket.recv(1024*100)
 
             # separa os dados do frame
             frame_data = data[:message_size]
@@ -117,7 +116,7 @@ if __name__ == '__main__':
     choice = None
 
     while choice != '0':
-        os.system('cls')
+        # os.system('cls')
         print('------------')
         print('1- Imagem')
         print('2- Video streaming')
@@ -126,7 +125,7 @@ if __name__ == '__main__':
 
         choice = input('Selecione uma opção: ')
 
-        client_socket = ClientSocket('localhost', 7777)
+        client_socket = ClientSocket('192.168.0.200', 7777)
         if choice == '1':
             client_socket.get_image()
 

@@ -1,10 +1,8 @@
 from socket import *
 import cv2 as cv
-import numpy as np
 import time as tm
 import pickle as pc
 import struct as st
-import sys
 
 class ServerSocket:
     '''
@@ -34,7 +32,7 @@ class ServerSocket:
         sentence = connection_socket.recv(1024)
 
         if sentence.decode() == 'get_image':
-            self.load_image(connection_socket)
+            self.load_image(address, connection_socket)
 
         if sentence.decode() == 'get_video':
             self.load_video(connection_socket)
@@ -44,7 +42,7 @@ class ServerSocket:
 
         connection_socket.close()
 
-    def load_image(self, socket=None, image_name='source/imagem.png') -> None:
+    def load_image(self, address, socket=None, image_name='source/imagem.png') -> None:
         '''
         Sends an image to the client using a socket.
         '''
@@ -57,10 +55,12 @@ class ServerSocket:
 
         # serializa os dados e calcula o tamanho
         data = pc.dumps(image)
-        message_size = st.pack('L', len(data))
+        message_size = st.pack('i', len(data))
 
         # envia o tamanho da mensagem e os dados
+        print('Enviando imagem...')
         socket.sendall(message_size + data)
+        print('Mensagem enviada.')
 
     def load_video(self, socket=None, video_name='source/video.mp4') -> None:
         '''
@@ -73,6 +73,8 @@ class ServerSocket:
         # carrega o video
         video = cv.VideoCapture(video_name)
 
+        print('Transmitindo video...')
+        
         while True:
             # le um quadro do video
             ret, frame = video.read()
@@ -80,13 +82,13 @@ class ServerSocket:
             # caso ret seja falso, o video finalizou
             if not ret:
                 data = pc.dumps(b'end')
-                message_size = st.pack('L', len(data))
+                message_size = st.pack('i', len(data))
                 socket.sendall(message_size + data)
                 break
             
             # serializa os dados e calcula o tamanho
             data = pc.dumps(frame)
-            message_size = st.pack('L', len(data))
+            message_size = st.pack('i', len(data))
 
             # envia o tamanho da mensagem e os dados
             socket.sendall(message_size + data)
@@ -94,11 +96,13 @@ class ServerSocket:
             # pausa para sincronizar os frames
             tm.sleep(0.016)
 
+        print('Video transmitido.')
+
         video.release()
 
 
 if __name__ == '__main__':
-    socket = ServerSocket('localhost', 7777)
+    socket = ServerSocket('', 7777)
     
     while True:
         socket.run_socket()
