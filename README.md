@@ -1,8 +1,5 @@
 # Streaming de Vídeo Usando Socket
 
-## Resumo
-
-O programa desenvolvido faz a tranferência de imagens ou o streaming de vídeos atrvéz de um socket TCP, entre cliente e servidor. O usuário tem a possibilidade de escolher entre transferência de imagem e vídeo. Após a escolha do usuário onde a conexão já está sendo estabelecida, é feita a troca de informações cliente e servidor de modo que haja uma tranferêcia de imagem ou vídeo.  
 
 # Servidor
 
@@ -387,8 +384,8 @@ if __name__ == '__main__':
             client_socket.get_video()
 ```
 
-# Eventos:
-#### Os eventos por trás de toda a lógica do código estão funcionando da seguinte maneira:
+# Eventos, Estados e Mensagens:
+#### Os eventos, estados e mensagens por trás de toda a lógica do código estão funcionando da seguinte maneira:
 
 <br />
 <div style="line-height: 2;">
@@ -429,3 +426,18 @@ if __name__ == '__main__':
 </div>
 
 <br />
+
+
+# Funcionamento do software:
+O programa desenvolvido faz a tranferência de imagens ou o streaming de vídeos atrvéz de um socket TCP, entre cliente e servidor. O usuário tem a possibilidade de escolher entre transferência de imagem e vídeo. Após a escolha do usuário onde a conexão já está sendo estabelecida, é feita a troca de informações cliente e servidor de modo que haja uma tranferêcia de imagem ou vídeo. O servidor envia imagem ou o vídeo que estão armazenados em pasta local para cliente. Após receber os dados o cliente reproduz imagem ou vídeo.
+
+# Propósito do software:
+O propósito so software é transferir imagens ou vídeos através de streaming de um servidor para um cliente.
+
+# Motivação da escolha do protocolo de transporte:
+O protocolo escolhido foi o TCP, sendo escolhido por conta de garantir maior integradade de transferência de imagens e vídeos, fazendo com que os dados transferidos cheguem sem nehum tipo de perda.
+
+# Requisitos mínimos de funcionamento:
+- Rede local 
+- Máquina com python: 
+- OpenCV: pip install opencv-python
