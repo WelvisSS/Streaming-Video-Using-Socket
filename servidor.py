@@ -39,7 +39,7 @@ class ServerSocket:
 
         connection_socket.close()
 
-    def load_image(self, address, socket=None, image_name='source/imagem.png') -> None:
+    def load_image(self, address, socket=None, image_name='source/imagem.jpg') -> None:
         '''
         Sends an image to the client using a socket.
         '''
@@ -91,7 +91,7 @@ class ServerSocket:
             socket.sendall(message_size + data)
 
             # pausa para sincronizar os frames
-            tm.sleep(0.016)
+            tm.sleep(0.033)
 
         print('Video transmitido.')
 
