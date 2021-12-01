@@ -37,9 +37,6 @@ class ServerSocket:
         if sentence.decode() == 'get_video':
             self.load_video(connection_socket)
 
-        if sentence.decode() == 'get_whole_video':
-            self.load_whole_video(connection_socket)
-
         connection_socket.close()
 
     def load_image(self, address, socket=None, image_name='source/imagem.png') -> None:
