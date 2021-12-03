@@ -11,7 +11,7 @@ import time as tm
 import pickle as pc
 import struct as st
 ```
-- A biblioteca socket é a biblioteca que possibilita a montagem do socket. 
+- A biblioteca socket é a biblioteca que possibilita a conexão e criação dos sockets, além do envia dos dados entre cliente e servidor. 
 ```
 from socket import *
 ```
@@ -27,7 +27,7 @@ import time as tm
 ```
 import pickle as pc
 ```
-- A biblioteca struct serve para interpretar bytes como um pacote de dados binários.
+- A biblioteca struct serve faz a conversão entre structs de C e valores de Python, representados por objetos bytes em Python.
 ```
 import struct as st
 ```

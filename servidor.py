@@ -16,6 +16,10 @@ class ServerSocket:
     def setup_socket(self, name, port):
         '''
         Sets up the socket.
+            
+        Parameters:
+            - name (string): server name/adress on the network
+            - port (int): port of the server
         '''
 
         self.socket = socket(AF_INET, SOCK_STREAM)
@@ -32,16 +36,20 @@ class ServerSocket:
         sentence = connection_socket.recv(1024)
 
         if sentence.decode() == 'get_image':
-            self.load_image(address, connection_socket)
+            self.load_image(connection_socket)
 
         if sentence.decode() == 'get_video':
             self.load_video(connection_socket)
 
         connection_socket.close()
 
-    def load_image(self, address, socket=None, image_name='source/imagem.jpg') -> None:
+    def load_image(self, socket=None, image_name='source/imagem.jpg') -> None:
         '''
         Sends an image to the client using a socket.
+
+        Parameters:
+            -socket (Socket): client socket
+            -image_name (string): name of the file
         '''
 
         if socket == None:
@@ -62,6 +70,10 @@ class ServerSocket:
     def load_video(self, socket=None, video_name='source/video.mp4') -> None:
         '''
         Streams a video to the client using a socket.
+
+        Parameters:
+            -socket (Socket): client socket
+            -video_name (string): name of the file
         '''
 
         if socket == None:

@@ -15,6 +15,10 @@ class ClientSocket:
     def setup_socket(self, name, port) -> None:
         '''
         Sets up the socket.
+
+        Parameters:
+            - name (string): server name/adress on the network
+            - port (int): port of the server
         '''
 
         self.socket = socket(AF_INET, SOCK_STREAM)
