@@ -395,6 +395,8 @@ if __name__ == '__main__':
         </li>
         <li>Servidor aceita a conexão - o servidor aceita a conexão solicitada pelo cliente e espera a solicitação do que fazer em seguida;
         </li>
+        <li>Servidor aguarda solicitações de conteúdo - o servidor começa a aguardar que o cliente que estabeleceu a conexão envie uma solicitação sobre qual conteúdo deseja;
+        </li>
         <li>Cliente solicita um conteúdo ao servidor - o cliente envia uma solicitação para o servidor para começar a receber um determinado conteúdo entre dois tipos de conteúdos possíveis;
             <ul>
                 <li> a. Cliente solicita imagem - no caso de solicitação de imagem, o cliente envia um 'get_image' para o servidor; 
