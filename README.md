@@ -432,7 +432,7 @@ if __name__ == '__main__':
 <br />
 
 # Diagrama:
-![img](https://github.com/WelvisSS/MovieApp/blob/main/src/img/gif/Demonstration.gif)
+![img](https://raw.githubusercontent.com/WelvisSS/Streaming-Video-Using-Socket/main/Demonstra%C3%A7%C3%A3o/Estados.png)
 
 
 # Funcionamento do software:
