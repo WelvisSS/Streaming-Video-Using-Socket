@@ -431,6 +431,9 @@ if __name__ == '__main__':
 
 <br />
 
+# Diagrama:
+![img](https://github.com/WelvisSS/MovieApp/blob/main/src/img/gif/Demonstration.gif)
+
 
 # Funcionamento do software:
 O programa desenvolvido faz a tranferência de imagens ou o streaming de vídeos atrvéz de um socket TCP, entre cliente e servidor. O usuário tem a possibilidade de escolher entre transferência de imagem e vídeo. Após a escolha do usuário onde a conexão já está sendo estabelecida, é feita a troca de informações cliente e servidor de modo que haja uma tranferêcia de imagem ou vídeo. O servidor envia imagem ou o vídeo que estão armazenados em pasta local para cliente. Após receber os dados o cliente reproduz imagem ou vídeo.
