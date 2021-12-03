@@ -1,8 +1,8 @@
 # Streaming de Vídeo Usando Socket
-### Curso: Ciência da Computação
-### Trablho de Rede de Computadores I
-### Professor: Jorge Lima de Oliveira Filho
-### Desenvolvedores: Fabiano Silva dos Santos, Welvis Silva Souza.
+#### Curso: Ciência da Computação
+#### Trablho de Rede de Computadores I
+#### Professor: Jorge Lima de Oliveira Filho
+#### Desenvolvedores: Fabiano Silva dos Santos, Welvis Silva Souza.
 
 # Servidor
 
