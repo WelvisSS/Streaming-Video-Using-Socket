@@ -403,7 +403,7 @@ if __name__ == '__main__':
                     <ul>
                         <li>i. Servidor recebe a solicitação do conteúdo - o servidor decodifica a mensagem enviada pelo cliente e entende que deve enviar a imagem;</li>
                         <li>ii. Servidor envia a imagem - o servidor começa a enviar o tamanho dos pacotes e os dados da imagem até que não tenha mais dados para enviar;</li>
-                        <li>iii. Cliente recebe a imagem e mostra na tela - o cliente recebe todos os dados e decodifica, depois mostra na tela a imagem que recebeu do servidor.</li>
+                        <li>iii. Cliente recebe dados da imagem - o cliente recebe todos os dados e decodifica, depois mostra na tela a imagem que recebeu do servidor.</li>
                     </ul>
                 </li>            
                 <li>b. Cliente solicita vídeo - no caos de solicitação de video, o cliente envia um 'get_video' para o servidor;
@@ -418,6 +418,8 @@ if __name__ == '__main__':
                         <li>iii. Servidor envia sinal de final do video - o servidor envia um 'end' para o cliente, indicando que o video acabou e não há mais dados para enviar.</li>
                     </ul>
                 </li>
+                <li> c. Cliente cancela solicitação - ao cancelar a solicitação o programa finaliza o socket e o programa cliente fecha; 
+                </li> 
             </ul>
         </li>
         <li>Servidor fecha o socket do cliente - o servidor fecha a conexão com o socket do cliente, visto que não há mais dados para serem enviados;
