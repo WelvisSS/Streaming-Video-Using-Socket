@@ -446,5 +446,5 @@ O protocolo escolhido foi o TCP, sendo escolhido por conta de garantir maior int
 
 # Requisitos mínimos de funcionamento:
 - Rede local 
-- Máquina com python: 
+- Máquina com python 3.7 
 - OpenCV: pip install opencv-python
